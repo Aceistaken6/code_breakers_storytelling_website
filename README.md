@@ -93,17 +93,7 @@
 - **Images:**  
   - All background images sourced from [Unsplash](https://unsplash.com/) and [Pexels](https://www.pexels.com/).  
 
----
 
-## License  
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  
-
----
-
-## Live Demo  
-Check out the live demo of **Dreamweaver: The Fractured Mind** [here](#).  
-
----
 
 Thank you for experiencing our story! We hope you enjoy the journey through the fractured mind of Dr. Liora Vale.  
 
