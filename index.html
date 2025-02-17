@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreamweaver: The Fractured Mind</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+            background-color: #21002d;
+            color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 80%;
+            padding: 20px;
+            text-align: center;
+            border: 15px solid rgba(170, 0, 255, 0.3);
+            box-shadow: 0 0 30px rgba(170, 0, 255, 0.5) inset;
+            min-height: 100vh;
+            border-radius: 20%;
+        }
+
+        .parallax {
+            height: 50vh;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        .parallax::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(33, 0, 45, 0.3), rgba(33, 0, 45, 0.7));
+        }
+
+        .parallax > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .story p {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0 0 5px rgba(170, 0, 255, 0.3);
+            transition: all 1s ease;
+        }
+
+        .glitch {
+            font-size: 2rem;
+            text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.7);
+            animation: glitch 0.8s infinite alternate;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+
+        @keyframes glitch {
+            0% { transform: translateX(2px); color: #f4f4f4; text-shadow: -2px 0 #ff00dd; }
+            25% { transform: translateX(-2px); color: #aa00ff; text-shadow: 2px 0 #00ffea; }
+            50% { transform: translateY(1px); color: #f4f4f4; text-shadow: -1px 0 #ff4800; }
+            75% { transform: translateY(-1px); color: #aa00ff; text-shadow: 1px 0 #00ff62; }
+            100% { transform: translateX(-2px); color: #f4f4f4; text-shadow: 2px 0 #ff00dd; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .flicker {
+            animation: flicker 3s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 1; }
+            10% { opacity: 0.8; }
+            20% { opacity: 1; }
+            40% { opacity: 0.7; }
+            42% { opacity: 1; }
+            43% { opacity: 0.6; }
+            44% { opacity: 1; }
+            60% { opacity: 1; }
+            80% { opacity: 0.5; }
+            90% { opacity: 1; }
+            100% { opacity: 0.9; }
+        }
+
+        .distort {
+            animation: distort 0.5s infinite alternate;
+        }
+
+        @keyframes distort {
+            0% { transform: scaleX(1.05) skewX(3deg); }
+            100% { transform: scaleX(0.95) skewX(-3deg); }
+        }
+
+        .overlay-text {
+            font-size: 2rem;
+            animation: fadeIn 2s ease-in-out forwards;
+            text-shadow: 0 0 10px rgba(170, 0, 255, 0.7);
+            font-style: italic;
+            letter-spacing: 3px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 0 20px;
+        }
+
+        .glass-break {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('assets/glass-crack.png') no-repeat center;
+            background-size: cover;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 999;
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10% { transform: translateX(-7px); }
+            30% { transform: translateX(6px); }
+            50% { transform: translateX(-5px); }
+            70% { transform: translateX(4px); }
+            90% { transform: translateX(-3px); }
+        }
+
+        .auto-scroll-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(170, 0, 255, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            z-index: 100;
+            border: 2px solid rgba(170, 0, 255, 0.4);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .auto-scroll-container:hover {
+            background: rgba(170, 0, 255, 0.3);
+        }
+
+        .auto-scroll-container label {
+            color: white;
+            margin-left: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(170, 0, 255, 0.7);
+        }
+
+        .auto-scroll-checkbox {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #aa00ff;
+        }
+
+        .speed-controls {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+        }
+
+        .speed-controls button {
+            background: rgba(170, 0, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .speed-controls button:hover {
+            background: rgba(170, 0, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        .speed-controls span {
+            color: white;
+            margin: 0 5px;
+        }
+
+        .audio-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(170, 0, 255, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            z-index: 100;
+            border: 2px solid rgba(170, 0, 255, 0.4);
+            backdrop-filter: blur(5px);
+        }
+
+        .audio-controls button {
+            background: rgba(170, 0, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .audio-controls button:hover {
+            background: rgba(170, 0, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .title-main {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            margin-top: 0;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .section-transition {
+            height: 50px;
+            margin: 30px 0;
+            background: linear-gradient(90deg, rgba(33,0,45,0) 0%, rgba(170,0,255,0.3) 50%, rgba(33,0,45,0) 100%);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+                border-width: 10px;
+            }
+            .story p {
+                font-size: 1.2rem;
+            }
+            .title-main {
+                font-size: 3rem;
+            }
+            .subtitle {
+                font-size: 1.4rem;
+            }
+            .overlay-text {
+                font-size: 1.5rem;
+                padding: 15px;
+            }
+            .parallax {
+                height: 40vh;
+            }
+            .auto-scroll-container,
+            .audio-controls {
+                padding: 8px;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .text-shadow-effect {
+            text-shadow: 0 0 10px rgba(170, 0, 255, 0.8), 0 0 20px rgba(170, 0, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <audio id="bg-music" loop>
+            <source src="assets/ambient-dream-16671.mp3" type="audio/mpeg">
+        </audio>
+        
+        <audio id="running-sound">
+            <source src="assets/chase-running-9109.mp3" type="audio/mpeg">
+        </audio>
+
+        <audio id="vibrate-effect">
+            <source src="assets/vibratetimeeffect4-37261.mp3" type="audio/mpeg">
+        </audio>
+        
+        <audio id="whisper-sound">
+            <source src="assets/whispers-22383.mp3" type="audio/mpeg">
+        </audio>
+        
+        <audio id="heartbeat-sound">
+            <source src="assets/heartbeat-121573.mp3" type="audio/mpeg">
+        </audio>
+
+        <div class="auto-scroll-container">
+            <input type="checkbox" id="autoScrollToggle" class="auto-scroll-checkbox">
+            <label for="autoScrollToggle">Auto Scroll</label>
+            <div class="speed-controls">
+                <button id="decreaseSpeed">-</button>
+                <span id="speedValue">1</span>
+                <button id="increaseSpeed">+</button>
+            </div>
+        </div>
+
+        <div class="audio-controls">
+            <button id="toggleMusic">Play Music</button>
+            <button id="toggleEffects">Enable Effects</button>
+        </div>
+
+        <section class="hero parallax reveal" style="background-image: url('assets/dreamscape.jpg');">
+            <h1 class="glitch title-main">DREAMWEAVER</h1>
+            <p class="fade-in flicker subtitle">The Fractured Mind</p>
+        </section>
+
+        <section class="story reveal">
+            <p class="fade-in">Dr. Liora Vale, the dreamwalker, stepped into the ether.</p>
+            <p class="fade-in">Tonight, the city whispered. The neon signs <span class="glitch">sang her name</span>.</p>
+            <p class="fade-in">She was not awake. <span class="glitch">Not yet.</span></p>
+        </section>
+
+        <div class="section-transition"></div>
+
+        <section class="parallax reveal" style="background-image: url('assets/city-loop.jpg');">
+            <p class="overlay-text flicker">The world was a song, shifting...</p>
+        </section>
+
+        <section class="story shake reveal">
+            <p class="fade-in">Buildings wavered like liquid glass.</p>
+            <p class="fade-in flicker"><span class="glitch">"Step through."</span> A voice rippled.</p>
+            <p class="fade-in">She walked forward—and fell into herself.</p>
+        </section>
+
+        <div class="section-transition"></div>
+
+        <section class="parallax reveal" id="looping-street" style="background-image: url('assets/looping-street.jpg');">
+            <p class="overlay-text">Where do the echoes end?</p>
+        </section>
+
+        <section class="story distort reveal">
+            <p class="fade-in">She ran. <span class="glitch">Footsteps chased her.</span></p>
+            <p class="fade-in distort">A man with a clockwork face turned the dials.</p>
+            <p class="fade-in">The streets looped. The moon <span class="glitch">blinked.</span></p>
+        </section>
+
+        <div class="section-transition"></div>
+
+        <section class="parallax reveal" id="memory-palace" style="background-image: url('assets/memory-palace.jpg');">
+            <p class="overlay-text float">Memories ripple like water...</p>
+        </section>
+        
+        <section class="story reveal">
+            <p class="fade-in">Her memories flooded in like broken <span class="glitch">film reels</span>.</p>
+            <p class="fade-in">She remembered the institute. The <span class="glitch">experiments</span>.</p>
+            <p class="fade-in">Tangled wires. A crown of needles pressed to her temples.</p>
+            <p class="fade-in">"Dreamwalker," they called her. <span class="glitch">Subject 27</span>.</p>
+            <p class="fade-in pulse">Were these her memories? Or someone else's?</p>
+        </section>
+        
+        <div class="section-transition"></div>
+        
+        <section class="parallax reveal" id="shadow-figure" style="background-image: url('assets/shadow-figure.jpg');">
+            <p class="overlay-text distort">Shadows have eyes...</p>
+        </section>
+        
+        <section class="story reveal">
+            <p class="fade-in">A figure watched from every corner.</p>
+            <p class="fade-in">Black smoke where eyes should be, <span class="glitch">tick-tocking</span> where the heart should beat.</p>
+            <p class="fade-in">"I am the Timekeeper," it whispered. "<span class="glitch">You have broken the rules</span>."</p>
+            <p class="fade-in">Liora felt the weight of forgotten time press against her skin.</p>
+            <p class="fade-in">The shadow's fingers reached—and the sky <span class="glitch">bled</span>.</p>
+        </section>
+        
+        <div class="section-transition"></div>
+
+        <section class="parallax reveal" id="mirror-world" style="background-image: url('assets/mirror-world.jpg');">
+            <p class="overlay-text flicker">Reality fractured like a broken mirror</p>
+        </section>
+
+        <section class="story reveal">
+            <p class="fade-in">Time fractured. Reality bent.</p>
+            <p class="fade-in">The man with a <span class="glitch">clockwork face</span> turned his dials.</p>
+            <p class="fade-in">Each tick echoed—a mirror-world unfolding.</p>
+            <p class="fade-in">Liora stepped forward... and the world flipped.</p>
+        </section>
+
+        <div class="section-transition"></div>
+        
+        <section class="parallax reveal" id="underwater-city" style="background-image: url('assets/underwater-city.jpg');">
+            <p class="overlay-text float text-shadow-effect">Beneath the surface, forgotten worlds breathe...</p>
+        </section>
+        
+        <section class="story reveal">
+            <p class="fade-in">She was underwater. No—she was <span class="glitch">breathing</span> underwater.</p>
+            <p class="fade-in">A sunken metropolis stretched before her, buildings curved like coral.</p>
+            <p class="fade-in">Memories floated by like jellyfish—<span class="glitch">not hers</span>—someone else's.</p>
+            <p class="fade-in">"The collective unconscious," she whispered, words bubbling.</p>
+            <p class="fade-in">The clockwork man stood at the center of it all, <span class="glitch">collecting</span> dreams.</p>
+        </section>
+        
+        <div class="section-transition"></div>
+        
+        <section class="parallax reveal" id="clocktower" style="background-image: url('assets/clocktower.jpg');">
+            <p class="overlay-text distort">Time is a prison...</p>
+        </section>
+        
+        <section class="story reveal" id="clockwork-story">
+            <p class="fade-in">At the heart of the dream stood a towering clock.</p>
+            <p class="fade-in">Each gear was a <span class="glitch">stolen memory</span>.</p>
+            <p class="fade-in">"He is the architect," a voice whispered. "The <span class="glitch">Timekeeper</span>."</p>
+            <p class="fade-in">Liora understood now. The institute hadn't made her a dreamwalker.</p>
+            <p class="fade-in">They had <span class="glitch">broken her</span> into pieces across dreams.</p>
+            <p class="fade-in">"Reclaim your fragments," the voice urged.</p>
+        </section>
+        
+        <div class="section-transition"></div>
+        
+        <section class="parallax reveal" id="final-confrontation" style="background-image: url('assets/final-confrontation.jpg');">
+            <p class="overlay-text glitch">THE UNRAVELING</p>
+        </section>
+        
+        <section class="story reveal">
+            <p class="fade-in">The Timekeeper spread his arms wide.</p>
+            <p class="fade-in">"<span class="glitch">You are a glitch</span> in my perfect system."</p>
+            <p class="fade-in">Liora stood before him, her fragmented self slowly piecing together.</p>
+            <p class="fade-in">"No," she said. "I am <span class="glitch">the dreamer</span>. And you're just a nightmare."</p>
+            <p class="fade-in">She reached into the clockwork chest.</p>
+            <p class="fade-in">And <span class="glitch">pulled</span>.</p>
+        </section>
+
+        <div class="section-transition"></div>
+
+        <section class="parallax reveal" id="glass-break-section" style="background-image: url('assets/glass-crack.png');">
+            <p class="overlay-text glitch">BREAKING POINT</p>
+        </section>
+
+        <section class="story reveal">
+            <p class="fade-in">The sky cracked. The air shattered.</p>
+            <p class="fade-in">She reached out, but her fingers touched only shards of thought.</p>
+            <p class="fade-in">The voice whispered again:
+             <span class="glitch">"Was it a dream, or was it reality?"</span></p>
+        </section>
+        
+        <div class="section-transition"></div>
+        
+        <section class="parallax reveal" id="awakening" style="background-image: url('assets/awakening.jpg');">
+            <p class="overlay-text pulse text-shadow-effect">The thread between worlds...</p>
+        </section>
+        
+        <section class="story reveal">
+            <p class="fade-in">Liora gasped, wires pulling from her temples.</p>
+            <p class="fade-in">White walls. Sterile light. The <span class="glitch">institute</span>.</p>
+            <p class="fade-in">"Subject 27 is awake," a voice announced.</p>
+            <p class="fade-in">But behind her closed eyes, she could still see <span class="glitch">the clockwork man</span>.</p>
+            <p class="fade-in">She could feel the threads of other dreamers.</p>
+            <p class="fade-in">And knew that some doors, once opened, <span class="glitch">never close</span>.</p>
+        </section>
+        
+        <div class="section-transition"></div>
+        
+        <section class="parallax reveal" id="epilogue" style="background-image: url('assets/epilogue.jpg');">
+            <p class="overlay-text flicker float">The weaver becomes the web...</p>
+        </section>
+        
+        <section class="story reveal">
+            <p class="fade-in">Night fell. The city hummed.</p>
+            <p class="fade-in">Liora stood at her window, watching the neon lights <span class="glitch">flicker</span>.</p>
+            <p class="fade-in">She closed her eyes. The boundary thinned.</p>
+            <p class="fade-in">She was both <span class="glitch">dreamer and dreamweaver</span> now.</p>
+            <p class="fade-in">The clockwork man was waiting.</p>
+            <p class="fade-in">But this time, <span class="glitch">she had the dials</span>.</p>
+        </section>
+
+        <div class="glass-break" id="glass-break"></div>
+    </div>
+
+    <script>
+    
+        const bgMusic = document.getElementById('bg-music');
+        const runningSound = document.getElementById('running-sound');
+        const vibrateEffect = document.getElementById('vibrate-effect');
+        const whisperSound = document.getElementById('whisper-sound');
+        const heartbeatSound = document.getElementById('heartbeat-sound');
+        const toggleMusicBtn = document.getElementById('toggleMusic');
+        const toggleEffectsBtn = document.getElementById('toggleEffects');
+        let effectsEnabled = false;
+        
+        toggleMusicBtn.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                toggleMusicBtn.textContent = 'Pause Music';
+            } else {
+                bgMusic.pause();
+                toggleMusicBtn.textContent = 'Play Music';
+            }
+        });
+        
+        toggleEffectsBtn.addEventListener('click', () => {
+            effectsEnabled = !effectsEnabled;
+            toggleEffectsBtn.textContent = effectsEnabled ? 'Disable Effects' : 'Enable Effects';
+        });
+        
+
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                } else {
+                    reveals[i].classList.remove('active');
+                }
+            }
+        }
+        
+        window.addEventListener('scroll', reveal);
+        reveal(); 
+
+
+        document.getElementById("mirror-world").addEventListener("mouseenter", () => {
+            if (effectsEnabled) {
+                runningSound.play();
+            }
+        });
+
+        document.getElementById("glass-break-section").addEventListener("mouseenter", () => {
+            if (effectsEnabled) {
+                vibrateEffect.play();
+                triggerGlassBreak();
+            }
+        });
+        
+        document.getElementById("shadow-figure").addEventListener("mouseenter", () => {
+            if (effectsEnabled) {
+                whisperSound.play();
+            }
+        });
+        
+        document.getElementById("clockwork-story").addEventListener("mouseenter", () => {
+            if (effectsEnabled) {
+                heartbeatSound.play();
+            }
+        });
+
+        function triggerGlassBreak() {
+            const glass = document.getElementById('glass-break');
+            document.body.classList.add('shake');
+            glass.style.opacity = '1';
+            setTimeout(() => {
+                glass.style.opacity = '0';
+                document.body.classList.remove('shake');
+            }, 1000);
+        }
+
+       
+let autoScroll;
+let isAutoScrolling = false;
+let scrollSpeed = 1;
+const speedValueElement = document.getElementById('speedValue');
+const autoScrollToggle = document.getElementById('autoScrollToggle');
+
+function updateScrollSpeed(change) {
+    scrollSpeed = Math.max(0.5, Math.min(5, scrollSpeed + change));
+    speedValueElement.textContent = scrollSpeed.toFixed(1);
+
+    if (isAutoScrolling) {
+        stopAutoScroll();
+        startAutoScroll();
+    }
+}
+
+
+function startAutoScroll() {
+    if (!isAutoScrolling) {
+        isAutoScrolling = true;
+        autoScroll = setInterval(() => {
+            window.scrollBy(0, scrollSpeed); 
+            if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+                stopAutoScroll(); 
+            }
+        }, 50);
+    }
+}
+
+
+function stopAutoScroll() {
+    clearInterval(autoScroll);
+    isAutoScrolling = false;
+}
+
+
+autoScrollToggle.addEventListener('change', function () {
+    if (this.checked) {
+        startAutoScroll();
+    } else {
+        stopAutoScroll();
+    }
+});
+
+
+document.getElementById('decreaseSpeed').addEventListener('click', () => {
+    updateScrollSpeed(-0.5);
+});
+
+document.getElementById('increaseSpeed').addEventListener('click', () => {
+    updateScrollSpeed(0.5);
+});
+
+  
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
